@@ -28,8 +28,8 @@ function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
+function cartItemClickListener({ target }) {
+  target.remove();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -63,10 +63,6 @@ const fetchedData = async () => {
   const { results } = await data;
   const itemSection = document.querySelector('.items');
   results.forEach((element) => itemSection.appendChild(createProductItemElement(element)));
-};
-
-const addCart = async () => {
-
 };
 
 window.onload = async () => {
