@@ -49,8 +49,9 @@ function addItemClickListener() {
   const cartSection = document.querySelector('.cart__items');
 
   buttons.forEach((button) => button.addEventListener('click', async ({ target }) => {
-    const itemID = getSkuFromProductItem(target.parentNode);
+    const itemID = await getSkuFromProductItem(target.parentNode);
     cartSection.appendChild(createCartItemElement(await fetchItem(itemID)));
+    saveCartItems(cartSection.outerHTML);
   }));
 }
 
