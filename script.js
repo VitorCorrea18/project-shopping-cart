@@ -51,7 +51,7 @@ function addItemClickListener() {
   buttons.forEach((button) => button.addEventListener('click', async ({ target }) => {
     const itemID = await getSkuFromProductItem(target.parentNode);
     cartSection.appendChild(createCartItemElement(await fetchItem(itemID)));
-    saveCartItems(cartSection.outerHTML);
+    saveCartItems(cartSection.innerHTML);
   }));
 }
 
@@ -66,7 +66,15 @@ const fetchedData = async () => {
   results.forEach((element) => itemSection.appendChild(createProductItemElement(element)));
 };
 
+// recuperando os itens salvos no localStorage para o cart. Falta colocar o eventListenner novamente em cada um.
+const reloadCart = () => {
+  const data = getSavedCartItems();
+  const cartSection = document.querySelector('.cart__items');
+  cartSection.innerHTML = data;
+};
+
 window.onload = async () => {
   await fetchedData();
   addItemClickListener();
+  reloadCart();
  };

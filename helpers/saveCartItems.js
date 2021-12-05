@@ -1,10 +1,10 @@
-// eu teria feito da forma como está comentado, pois o Rod explicou esta forma na revisão e achei melhor
-// realmente, mas como no requsito 10 a estrutura de testes pede para importar a <ol> toda, vou fazer
-// conforme os requisitos do projeto.
+// O requisito do projeto pede para dar como parâmetro a <ol> em si, mas para mim isso não faz sentido,
+// O Rod ensinou na revisão esta forma que vou deixar comentado, e explicou que a vantagem é a facilidade 
+// quando se quer salvar um objeto por exemplo. E esta forma vai adicionando os items sem a necessidade de um .push.
 
 // let array = [];
 const saveCartItems = (item) => {
-  // array = [...array, item];
+  // array = [...array, { produto: item }];
   // localStorage.setItem('cartItems', JSON.stringify(array));
   localStorage.setItem('cartItems', item);
 };
