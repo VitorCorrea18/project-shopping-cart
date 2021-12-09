@@ -1,3 +1,5 @@
+const cartSection = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -29,7 +31,9 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener({ target }) {
+  localStorage.removeItem('cartItems');
   target.remove();
+  saveCartItems(cartSection.innerHTML);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -46,7 +50,6 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 // que será passado como parâmetro para a função createCartItemElement.
 function addItemClickListener() {
   const buttons = document.querySelectorAll('.item__add');
-  const cartSection = document.querySelector('.cart__items');
 
   buttons.forEach((button) => button.addEventListener('click', async ({ target }) => {
     const itemID = await getSkuFromProductItem(target.parentNode);
@@ -66,15 +69,17 @@ const fetchedData = async () => {
   results.forEach((element) => itemSection.appendChild(createProductItemElement(element)));
 };
 
-// recuperando os itens salvos no localStorage para o cart. Falta colocar o eventListenner novamente em cada um.
+// recuperando os itens salvos no localStorage para o cart, e adicionando eventListener em cada um novamente.
 const reloadCart = () => {
   const data = getSavedCartItems();
-  const cartSection = document.querySelector('.cart__items');
   cartSection.innerHTML = data;
+  document.querySelectorAll('.cart__item').forEach((item) => {
+    item.addEventListener('click', cartItemClickListener);
+  });
 };
 
 window.onload = async () => {
   await fetchedData();
   addItemClickListener();
   reloadCart();
- };
+};
