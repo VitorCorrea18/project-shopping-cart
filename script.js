@@ -40,15 +40,15 @@ const subPriceInTotal = (item) => {
   const savedTotal = localStorage.getItem('total');
   const currTotal = Number(savedTotal);
   const newTotal = currTotal - price;
-  localStorage.setItem('total', newTotal.toFixed(2));
-  return newTotal.toFixed(2); // toFixed limita o numero de decimais para aparecer algo como 1,00014654985484.
+  localStorage.setItem('total', +newTotal.toFixed(2));
+  return +newTotal.toFixed(2); // toFixed limita o numero de decimais para aparecer algo como 1,00014654985484.
 };
 
 // atualiza o valor total dos produtos no carrinho no <span>.
 const updateSubTotalSpan = (total) => {
   const subTotalSpan = document.querySelector('.total-price');
   if (total > 0) {
-    subTotalSpan.innerText = `Total: ${total}`;
+    subTotalSpan.innerText = total;
   }
   if (total <= 0) subTotalSpan.innerText = '';
 };
@@ -77,8 +77,8 @@ const addPriceInTotal = (item) => {
   if (savedTotal) {
     const currTotal = Number(savedTotal);
     const newTotal = price + currTotal;
-    localStorage.setItem('total', newTotal.toFixed(2));
-    return newTotal.toFixed(2);
+    localStorage.setItem('total', +newTotal.toFixed(2));
+    return +newTotal.toFixed(2);
   }
   localStorage.setItem('total', price);
   return price;
@@ -119,9 +119,24 @@ const reloadCart = () => {
   });
 };
 
+// limpa o cart e tbm os valores no localStorage.
+const emptyCartClickListener = () => {
+  const btnClearCart = document.querySelector('.empty-cart');
+  btnClearCart.addEventListener('click', () => {
+    const cartItems = document.querySelectorAll('.cart__item');
+    cartItems.forEach((item) => {
+      item.remove();
+    });
+    localStorage.removeItem('total');
+    localStorage.removeItem('cartItems');
+    document.querySelector('.total-price').innerText = '';
+  });
+};
+
 window.onload = async () => {
   await fetchedData();
   addItemClickListener();
   reloadCart();
   updateSubTotalSpan(localStorage.getItem('total'));
+  emptyCartClickListener();
 };
