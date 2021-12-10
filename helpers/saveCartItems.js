@@ -1,4 +1,4 @@
-// O requisito do projeto pede para dar como parâmetro a <ol> em si, mas para mim isso não faz sentido,
+// O requisito do projeto pede para dar como parâmetro a <ol> em si, fiz da forma que pedia o requisito.
 // O Rod ensinou na revisão esta forma que vou deixar comentado, e explicou que a vantagem é a facilidade 
 // quando se quer salvar um objeto por exemplo. E esta forma vai adicionando os items sem a necessidade de um .push.
 
